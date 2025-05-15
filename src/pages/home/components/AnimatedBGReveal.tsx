@@ -1,46 +1,85 @@
-import { motion, useTransform, MotionValue } from 'framer-motion';
-
-import "./AnimatedBGReveal.css";
+import React, { useState, useEffect } from 'react';
+import { motion, useTransform, MotionValue, useAnimation, type Variants } from 'framer-motion';
+import './AnimatedBGReveal.css'; // Contains the final absolute positioning and styles
 
 interface AnimatedBGRevealProps {
-  mouseX: MotionValue<number>; // MotionValue for mouse X coordinate (from parent)
-  mouseY: MotionValue<number>; // MotionValue for mouse Y coordinate (from parent)
+  mouseX: MotionValue<number>;
+  mouseY: MotionValue<number>;
 }
 
-/**
- * AnimatedBGReveal component. This component takes two MotionValue objects from the parent,
- * mouseX and mouseY, representing the mouse position relative to the viewport center.
- * It then maps these values to rotation and translation values, and applies them to its
- * own style. The component is meant to be used as a direct child of the AnimatedBG
- * component, and will reveal a background image when the mouse is moved near the
- * component.
- *
- * @prop {MotionValue<number>} mouseX - Mouse position relative to viewport center on X axis.
- * @prop {MotionValue<number>} mouseY - Mouse position relative to viewport center on Y axis.
- * @return {React.ReactElement} - A styled div with motion properties.
- */
 const AnimatedBGReveal: React.FC<AnimatedBGRevealProps> = ({ mouseX, mouseY }) => {
-  // Input range for transformations, based on viewport dimensions.
-  // Assumes mouseX/mouseY from parent are relative to viewport center.
+  const [isIntroAnimationComplete, setIsIntroAnimationComplete] = useState(false);
+  const animationControls = useAnimation();
+
   const inputSpanX = typeof window !== 'undefined' ? window.innerWidth / 2 : 600;
   const inputSpanY = typeof window !== 'undefined' ? window.innerHeight / 2 : 400;
 
-  // Map mouse positions to rotation and translation values.
-  const rotateY = useTransform(mouseX, [-inputSpanX, inputSpanX], [-10, 10]); // Max ±10deg rotation
-  const rotateX = useTransform(mouseY, [-inputSpanY, inputSpanY], [10, -10]);  // Max ±10deg rotation
+  const activeMouseX = useTransform(mouseX, value => isIntroAnimationComplete ? value : 0);
+  const activeMouseY = useTransform(mouseY, value => isIntroAnimationComplete ? value : 0);
 
-  const translateX = useTransform(mouseX, [-inputSpanX, inputSpanX], [-15, 15]); // Max ±15px translation
-  const translateY = useTransform(mouseY, [-inputSpanY, inputSpanY], [-15, 15]); // Max ±15px translation
+  const rotateY_eff = useTransform(activeMouseX, [-inputSpanX, inputSpanX], [-10, 10]);
+  const rotateX_eff = useTransform(activeMouseY, [-inputSpanY, inputSpanY], [10, -10]);
+  const translateX_eff = useTransform(activeMouseX, [-inputSpanX, inputSpanX], [-15, 15]);
+  const translateY_eff = useTransform(activeMouseY, [-inputSpanY, inputSpanY], [-15, 15]);
+
+  useEffect(() => {
+    const sequence = async () => {
+      await animationControls.start("introToFinal");
+      setIsIntroAnimationComplete(true);
+    };
+    sequence();
+  }, [animationControls]);
+
+  const componentVariants: Variants = {
+    initial: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      borderRadius: '0px',
+      boxShadow: '0px 0px 0px rgba(0,0,0,0)',
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotateX: 0,
+      rotateY: 0,
+    },
+    introToFinal: {
+      position: 'absolute', // Final position from CSS
+      top: '25%',
+      left: '65%',
+      width: '20%',
+      height: '65vh',
+      borderRadius: '20px',
+      boxShadow: '0px 15px 35px -10px rgba(0, 0, 0, 0.35)',
+      opacity: 1,
+      x: 0, 
+      y: 0,
+      rotateX: 0,
+      rotateY: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 80,
+        damping: 20,
+        delay: 1, // 1-second delay for the intro animation to start
+      }
+    },
+  };
 
   return (
     <motion.div
       className="animated-bg-reveal"
-      style={{
-        x: translateX,
-        y: translateY,
-        rotateX: rotateX,
-        rotateY: rotateY,
+      variants={componentVariants}
+      initial="initial"
+      animate={animationControls}
+      style={{ // Mouse follow transforms are applied here
+        x: translateX_eff,
+        y: translateY_eff,
+        rotateX: rotateX_eff,
+        rotateY: rotateY_eff,
       }}
+      // This transition applies to the mouse follow effect
       transition={{ type: 'spring', stiffness: 180, damping: 20, mass: 0.7 }}
     />
   );
