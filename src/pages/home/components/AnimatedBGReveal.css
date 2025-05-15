@@ -1,0 +1,9 @@
+.animated-bg-reveal{
+    position: absolute;
+    top: 15%;
+    left: 65%;
+    width: 20%;
+    height: 65vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
