@@ -1,9 +1,23 @@
-.animated-bg-reveal{
-    position: absolute;
-    top: 15%;
-    left: 65%;
-    width: 20%;
-    height: 65vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+
+.animated-bg-reveal {
+  position: absolute;
+  top: 10%;
+  left: 65%;
+  width: 20%; 
+  height: 65vh;
+  background: linear-gradient(
+    135deg,
+    #6e7cfa,
+    #8b6cf9
+  ); 
+  border-radius: 20px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.1em;
+  box-shadow: 0px 15px 35px -10px rgba(0, 0, 0, 0.35); 
+
+  transform-style: preserve-3d;
+ 
 }
