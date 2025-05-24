@@ -1,17 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-import {RouterProvider} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import router from "./pages/router";
 
-import LanguageProvider from './context/LanguageContextObject';
+import LanguageProvider from "./context/LanguageContextObject";
 
-import './index.css'
+import "./index.css";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <LanguageProvider>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </LanguageProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);
