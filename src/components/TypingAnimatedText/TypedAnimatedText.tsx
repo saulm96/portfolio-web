@@ -1,13 +1,12 @@
-// TypedAnimatedText.tsx
 import { useState, useRef, useEffect } from "react";
-import styles from "./TypedAnimatedText.module.css"; // Make sure this path is correct
+import styles from "./TypedAnimatedText.module.css";
 
 interface TypedAnimatedTextProps {
-  text: string; // The text to be typed out
-  typingSpeed?: number; // Speed of typing in milliseconds per character
-  cursorBlinkSpeed?: number; // Speed of cursor blinking in milliseconds
-  className?: string; // Optional CSS class for the main span
-  startDelay?: number; // Optional delay in milliseconds before the animation starts
+  text: string;
+  typingSpeed?: number;
+  cursorBlinkSpeed?: number;
+  className?: string;
+  startDelay?: number;
 }
 
 /**
@@ -19,23 +18,22 @@ interface TypedAnimatedTextProps {
  * @prop {number} [typingSpeed=100] Speed of typing in milliseconds per character
  * @prop {number} [cursorBlinkSpeed=500] Speed of cursor blinking in milliseconds
  * @prop {string} [className] Optional CSS class for the main span
- * @prop {number} [startDelay=0] Delay in milliseconds before the animation starts
+ * @prop {number} [startDelay=2500] Delay in milliseconds before the animation starts
  */
 const TypedAnimatedText: React.FC<TypedAnimatedTextProps> = ({
   text,
   typingSpeed = 100,
   cursorBlinkSpeed = 500,
   className,
-  startDelay = 2500, // Default value for startDelay
+  startDelay = 2500,
 }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const textIndexRef = useRef(0);
 
-  // Effect responsible for the typing animation with an optional delay
+  // Typing effect with optional start delay
   useEffect(() => {
-    // Validate the 'text' prop
     if (typeof text !== "string") {
       setDisplayedText("");
       textIndexRef.current = 0;
@@ -44,23 +42,19 @@ const TypedAnimatedText: React.FC<TypedAnimatedTextProps> = ({
       return;
     }
 
-    // Reset state for new text or on mount
     setDisplayedText("");
     textIndexRef.current = 0;
-    setIsTyping(false); // Ensure isTyping is false before the delay and typing
+    setIsTyping(false);
 
-    // Handle the case of an empty string
     if (text.length === 0) {
       setShowCursor(false);
-      // isTyping is already false
       return;
     }
 
-    // If text is valid and non-empty, set up the delay
     let typingIntervalId: number | undefined;
-    
+
     const delayTimeoutId = window.setTimeout(() => {
-      setIsTyping(true); // Typing starts AFTER the delay
+      setIsTyping(true);
 
       typingIntervalId = window.setInterval(() => {
         if (textIndexRef.current < text.length) {
@@ -71,45 +65,43 @@ const TypedAnimatedText: React.FC<TypedAnimatedTextProps> = ({
           if (typingIntervalId !== undefined) {
             clearInterval(typingIntervalId);
           }
-          setIsTyping(false); // Typing has finished
+          setIsTyping(false);
         }
       }, typingSpeed);
-    }, startDelay); // Use the new prop here
+    }, startDelay);
 
-    // Cleanup function for this effect
     return () => {
-      window.clearTimeout(delayTimeoutId); // Clear the delay timeout
+      window.clearTimeout(delayTimeoutId);
       if (typingIntervalId !== undefined) {
-        window.clearInterval(typingIntervalId); // Clear the typing interval if it exists
+        window.clearInterval(typingIntervalId);
       }
     };
-  }, [text, typingSpeed, startDelay]); // Add startDelay to dependencies
+  }, [text, typingSpeed, startDelay]);
 
-  // useEffect for cursor visibility and blinking behavior
+  // Cursor blinking effect
   useEffect(() => {
-    if (typeof text !== "string" || text.length === 0) { // Rule 1: No text, no cursor
+    if (typeof text !== "string" || text.length === 0) {
       setShowCursor(false);
       return;
     }
 
     let cursorBlinkingInterval: number | undefined = undefined;
 
-    if (isTyping) { // Rule 2: While typing, cursor is static and visible
+    if (isTyping) {
       setShowCursor(true);
-      // NO blinking interval is started here
-    } else { // Rule 3: When NOT typing (initial delay, or finished), cursor blinks
-      setShowCursor(true); // Make sure it's visible before first blink
+    } else {
+      setShowCursor(true);
       cursorBlinkingInterval = window.setInterval(() => {
         setShowCursor((prev) => !prev);
       }, cursorBlinkSpeed);
     }
 
-    return () => { // Cleanup
+    return () => {
       if (cursorBlinkingInterval !== undefined) {
         window.clearInterval(cursorBlinkingInterval);
       }
     };
-  }, [isTyping, text, cursorBlinkSpeed]); // Existing dependencies
+  }, [isTyping, text, cursorBlinkSpeed]);
 
   return (
     <span className={className}>
@@ -117,7 +109,9 @@ const TypedAnimatedText: React.FC<TypedAnimatedTextProps> = ({
       {showCursor && (
         <span
           className={`${styles.cursor} ${
-            !isTyping && text.length > 0 ? styles.cursorFinishedBlinking : styles.cursorTypingStatic
+            !isTyping && text.length > 0
+              ? styles.cursorFinishedBlinking
+              : styles.cursorTypingStatic
           }`}
         >
           |

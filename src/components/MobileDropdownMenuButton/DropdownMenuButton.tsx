@@ -71,10 +71,9 @@ const DropdownMenu: React.FC = () => {
             {menuItems.map((item, index) => (
               <li key={index} role="menuitem">
                 <Link
-                  to={item.href} // Usa 'to' para el componente Link
-                  // Añade la clase 'active-dropdown-item' si la ruta actual coincide
+                  to={item.href} 
                   className={location.pathname === item.href ? "active-dropdown-item" : ""}
-                  onClick={handleLinkClick} // Cierra el menú al hacer clic
+                  onClick={handleLinkClick} 
                 >
                   {item.label}
                 </Link>

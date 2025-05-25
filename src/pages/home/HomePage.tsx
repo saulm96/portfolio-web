@@ -23,21 +23,18 @@ const HomePage: React.FC = () => {
       mouseX.set(xRelativeToCenter);
       mouseY.set(yRelativeToCenter);
     };
-    //Add global mousemove event listener on window
     window.addEventListener("mousemove", handleMouseMoveWindow);
-
-    //cleanup listener on component unmount.
     return () => {
       window.removeEventListener("mousemove", handleMouseMoveWindow);
     };
-  }, [mouseX, mouseY]); //Dependencies for the effect.
+  }, [mouseX, mouseY]); 
 
   return (
     <div className="home-page-content-wraper">
       <TypedAnimatedText 
         text={t("lp_typing_animation_text")}
         className="home-page-typed-text" />
-      {/* Pass mouse MotionValues as props to the animated component. */}
+
       <AnimatedBGReveal mouseX={mouseX} mouseY={mouseY}>
         <p className="home-page-welcome-text">{t("welcome_text")}</p>
       </AnimatedBGReveal>
