@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useMotionValue } from "framer-motion";
 
 import AnimatedBGReveal from "./components/AnimatedBGReveal";
+import TypedAnimatedText from "../../components/TypingAnimatedText/TypedAnimatedText";
 
 import "./HomePage.css";
 
@@ -33,6 +34,9 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="home-page-content-wraper">
+      <TypedAnimatedText 
+        text={t("lp_typing_animation_text")}
+        className="home-page-typed-text" />
       {/* Pass mouse MotionValues as props to the animated component. */}
       <AnimatedBGReveal mouseX={mouseX} mouseY={mouseY}>
         <p className="home-page-welcome-text">{t("welcome_text")}</p>
