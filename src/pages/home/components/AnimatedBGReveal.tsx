@@ -15,6 +15,7 @@ interface AnimatedBGRevealProps {
   mouseX: MotionValue<number>;
   mouseY: MotionValue<number>;
   children?: ReactNode;
+  onExpanded?: () => void;
 }
 
 const galaxyFadeVariants: Variants = {
@@ -41,6 +42,7 @@ const AnimatedBGReveal: React.FC<AnimatedBGRevealProps> = ({
   mouseX,
   mouseY,
   children,
+  onExpanded,
 }) => {
   const [isIntroAnimationComplete, setIsIntroAnimationComplete] =
     useState(false);
@@ -119,12 +121,12 @@ const AnimatedBGReveal: React.FC<AnimatedBGRevealProps> = ({
 
   const handleClick = async () => {
     if (isIntroAnimationComplete && !isExpanded) {
-      setIsGalaxyVisible(false); 
-
-    
-
+      setIsGalaxyVisible(false);     
       setIsExpanded(true);
+
       await animationControls.start("fullScreen"); 
+
+      if (onExpanded) onExpanded();
     }
   };
 
