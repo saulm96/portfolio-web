@@ -5,8 +5,13 @@
 
     perspective: 1500px;
     overflow: hidden;
+
 }
 
 .home-page-typed-text{
     font-size: 5rem;
+}
+
+.home-page-welcome-text{
+    color: rgb(165, 180, 245);
 }
