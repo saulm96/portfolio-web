@@ -32,7 +32,7 @@ const TypedAnimatedText: React.FC<TypedAnimatedTextProps> = ({
   const [isTyping, setIsTyping] = useState(false);
   const textIndexRef = useRef(0);
 
-  // Typing effect with optional start delay
+  // Typing effect with start delay
   useEffect(() => {
     if (typeof text !== "string") {
       setDisplayedText("");

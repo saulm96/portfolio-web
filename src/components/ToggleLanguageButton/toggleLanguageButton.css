@@ -17,3 +17,10 @@
     font-size: 0.8em;
     font-weight: bold;
 }
+
+.toggle-language-button-home{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}

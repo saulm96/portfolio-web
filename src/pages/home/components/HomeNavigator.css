@@ -1,0 +1,105 @@
+.home-navigator {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  margin-top: 5vh;
+  height: 100%;
+  width: 100%;
+}
+
+.home-navigator-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  align-items: center;
+}
+
+.home-navigator-item {
+  width: 100vw;
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-navigator-item:nth-child(even) {
+  text-align: center;
+}
+
+.home-navigator-item:nth-child(even) .home-navigator-link::before {
+  right: 0;
+  width: calc(100% + var(--border-width, 40vw));
+  background: linear-gradient(to left, rgba(201, 195, 250, 0.4) 0%, transparent 100%);
+  transform-origin: right center;
+}
+
+.home-navigator-item:nth-child(even) .home-navigator-link::after {
+  right: 0;
+  width: calc(100% + var(--border-width, 40vw));
+  background: linear-gradient(to left, #c9c3fa 0%, transparent 100%);
+}
+
+.home-navigator-item:nth-child(odd) {
+  text-align: center;
+}
+
+.home-navigator-item:nth-child(odd) .home-navigator-link::before {
+  left: 0;
+  width: calc(100% + var(--border-width, 40vw));
+  background: linear-gradient(to right, rgba(201, 195, 250, 0.4) 0%, transparent 100%);
+  transform-origin: left center;
+}
+
+.home-navigator-item:nth-child(odd) .home-navigator-link::after {
+  left: 0;
+  width: calc(100% + var(--border-width, 40vw));
+  background: linear-gradient(to right, hsl(0, 0%, 100%) 0%, transparent 100%);
+}
+
+.home-navigator-link {
+  display: inline-block;
+  padding: 25px 40px;
+  text-decoration: none;
+  color: #c9c3fa;
+  font-size: 7rem;
+  font-weight: bold;
+  background-color: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.home-navigator-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.home-navigator-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+}
+
+.home-navigator-item:hover .home-navigator-link::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+
+.home-navigator-link.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+

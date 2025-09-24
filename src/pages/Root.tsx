@@ -1,11 +1,14 @@
-import { Outlet} from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import NavBar from "../components/NavBar/NavBar";
 
 const Root = () => {
-     return (
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  return (
     <>
-      <header>
+      <header style={{ opacity: isHomePage ? 0 : 1 }}>
         <NavBar />
       </header>
       <main>

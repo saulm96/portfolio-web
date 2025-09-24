@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    color: rgb(255, 177, 214);
 }
 body{
     background-color: rgb(17, 19, 17);
@@ -11,5 +12,4 @@ body{
 }
 header{
     position: relative;
-    opacity: 0;
 }

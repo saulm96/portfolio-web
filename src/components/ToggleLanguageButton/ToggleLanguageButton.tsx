@@ -2,7 +2,11 @@ import { useTranslation } from "../../hooks/useTranslations";
 
 import "./toggleLanguageButton.css";
 
-const LanguageToggleButton: React.FC = () => {
+interface LanguageToggleButtonProps {
+  pageName?: string;
+}
+
+const LanguageToggleButton: React.FC<LanguageToggleButtonProps> = ({ pageName }) => {
   const { language, setLanguage } = useTranslation();
 
   const toggleLanguage = () => {
@@ -13,12 +17,19 @@ const LanguageToggleButton: React.FC = () => {
     return language === "es" ? "English" : "Español";
   };
 
+  const getClassName = (): string => {
+    let className = "toggle-language-button";
+    if (pageName) {
+      className += ` toggle-language-button-${pageName}`;
+    }
+    return className;
+  };
+
   return (
-    <button className="toggle-language-button" onClick={toggleLanguage}>
+    <button className={getClassName()} onClick={toggleLanguage}>
       {getButtonText()}
     </button>
   );
 };
-
 
 export default LanguageToggleButton;

@@ -42,7 +42,7 @@ const NavBar: React.FC = () => {
           )}
           <div className="navbar-right-section">
             {isMobile && <DropdownMenuButton />}
-            <LanguageToggleButton />
+            <LanguageToggleButton pageName="navbar" />
           </div>
         </div>
       </nav>

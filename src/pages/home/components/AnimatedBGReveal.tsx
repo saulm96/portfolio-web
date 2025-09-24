@@ -124,9 +124,9 @@ const AnimatedBGReveal: React.FC<AnimatedBGRevealProps> = ({
       setIsGalaxyVisible(false);     
       setIsExpanded(true);
 
-      await animationControls.start("fullScreen"); 
-
+      // Call onExpanded immediately to hide animated text
       if (onExpanded) onExpanded();
+      await animationControls.start("fullScreen"); 
     }
   };
 

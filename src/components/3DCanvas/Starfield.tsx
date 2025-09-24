@@ -12,14 +12,12 @@ interface StarfieldProps {
   zMin?: number; 
   zDepth?: number; 
 }
-
 function Starfield({
   count = 7000,
   initialColor = 'white',
   rotationSpeed = 0.005,
   textureUrl = '/star.png',
-  starSize = 0.5, 
-                  
+  starSize = 0.5,
 }: StarfieldProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const starTexture = useLoader(THREE.TextureLoader, textureUrl);
