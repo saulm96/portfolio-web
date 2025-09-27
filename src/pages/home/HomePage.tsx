@@ -7,6 +7,7 @@ import AnimatedBGReveal from "./components/AnimatedBGReveal";
 import TypedAnimatedText from "../../components/TypingAnimatedText/TypedAnimatedText";
 import ToggleLanguage from "../../components/ToggleLanguageButton/ToggleLanguageButton";
 import HomeNavigator from "./components/HomeNavigator";
+import backgroundVideo from "../../assets/videos/portfolio-welcome-bg.mp4"
 
 import "./HomePage.css";
 
@@ -14,6 +15,7 @@ const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const [hasBgExpanded, setHasBgExpanded] = useState(false);
   const [isNavigatorEnabled, setIsNavigatorEnabled] = useState(false);
+  const [shouldRenderVideo, setShouldRenderVideo] = useState(true);
   // Motion values to store mouse coordinates, relative to viewport center
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -45,6 +47,32 @@ const HomePage: React.FC = () => {
   return (
     <>
     <ToggleLanguage pageName="home"/>
+    {shouldRenderVideo && (
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        className="home-welcome-bg"
+        style={{ 
+          filter: 'brightness(0.5) contrast(1.1)',
+          opacity: hasBgExpanded ? 0 : 1,
+          transition: 'opacity 2s ease-out',
+          pointerEvents: 'none'
+        }}
+        onLoadedData={(e) => {
+          const video = e.target as HTMLVideoElement;
+          video.playbackRate = 0.5;
+        }}
+        onTransitionEnd={() => {
+          if (hasBgExpanded) {
+            setShouldRenderVideo(false);
+          }
+        }}
+      >
+        <source src={backgroundVideo} type="video/mp4" />
+      </video>
+    )}
+    <div className="home-welcome-bg-overlay"></div>
       <div className="home-page-content-wraper">
         <div className="typed-animation-text-wrapper">
           {!hasBgExpanded && (

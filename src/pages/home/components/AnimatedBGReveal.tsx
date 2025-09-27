@@ -90,7 +90,7 @@ const AnimatedBGReveal: React.FC<AnimatedBGRevealProps> = ({
 
   const componentVariants: Variants = {
     fullScreen: { position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh", borderRadius: "0px", boxShadow: "0px 0px 0px rgba(0,0,0,0)", opacity: 1, backgroundColor: "rgb(0, 0, 0)", transition: { type: "spring", stiffness: 80, damping: 20 }, },
-    corner: { position: "absolute", top: "25%", left: "65%", width: "20%", height: "65vh", borderRadius: "20px", boxShadow: "0px 15px 35px -10px rgba(0, 0, 0, 0.35)", opacity: 1, backgroundColor: "rgb(0, 0, 0)", transition: { type: "spring", stiffness: 80, damping: 20, delay: 0.5 }, },
+    corner: { position: "absolute", top: "25%", left: "65%", width: "20%", height: "65vh", borderRadius: "20px", boxShadow: "0px 0px 53px 8px rgba(146, 146, 146, 0.1)", opacity: 1, backgroundColor: "rgb(0, 0, 0)", transition: { type: "spring", stiffness: 80, damping: 20, delay: 0.5 }, },
   };
   const contentVariants: Variants = {
     hidden: { opacity: 0, y: 20, transition: { duration: 0.2 } },
